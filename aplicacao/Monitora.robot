@@ -2,17 +2,6 @@
 Documentation   Log in App monitora
 Library         SeleniumLibrary
 
-Suite Setup
-Test Setup
-Suite Teardown
-Test Teardown
-
-# Função Principal
-*** Test Cases ***
-Open Login Acesso Monitora
-        Open Monitora
-        Login Monitora   699.743.491-68   qaz123
-        Acesso Monitora
 
 
 *** Variables ***
@@ -41,6 +30,3 @@ Acesso Monitora
     Select From List By Label  id:feijoadaProfile  Gestor
     Click Button  id:btn-access
     Wait Until Page Contains  Autenticação Realizada com sucesso
-
-Acesso UC List
-    Click Element  xPath://*[@id="navbarSupportedContent"]/ul/li[2]/a

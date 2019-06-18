@@ -1,19 +1,27 @@
 *** Settings ***
 Documentation   Log in App monitora
-Library         SeleniumLibrary
-
-Suite Setup  Open Login Acesso Monitora   699.743.491-68   qaz123
-Suite Teardown  Deletar UC Teste
+Resource        Monitora.robot
+Suite Setup  Open Monitora
+Suite Teardown  Close Browser
 Test Setup
 Test Teardown
 
-# Função Principal
+
 *** Test Cases ***
+
+Login
+        Login Monitora   699.743.491-68   qaz123
+
+Acesso
+        Acesso Monitora
 
 Aderir Nova UC
         Acesso UC List
         Aderir Nova UC    Floresta Nacional Tefé  Plantas - Mata Atlântica e Amazônia    Implementação
         Acesso UC List
+
+Deletar UC Teste
+        Deletar UC Teste
 
 
 *** Variables ***
@@ -22,23 +30,6 @@ Aderir Nova UC
 
 
 *** Keywords ***
-
-Open Login Acesso Monitora
-    [Arguments]    ${cpf}    ${password}
-    Open Browser    http://dev.monitora.sisicmbio.icmbio.gov.br/  chrome
-    Wait Until Page Contains   Login
-    Input Text  id:nuLogin   ${cpf}
-    Input Text  id:senha   ${password}
-    Click Button  class:btn-primary
-    Wait Until Page Contains  Bem-vindo aos Sistemas
-    Click Button  xPath:/html/body/div[2]/div[2]/div/div[2]/div[6]/div/button
-    Wait Until Page Contains  Unidade Organizacional
-    Set Selenium Implicit Wait  5 seconds
-    Select From List By Label  id:usersList  COTEC - Coordenação de Tecnologia da Informação
-    Select From List By Label  id:feijoadaProfile  Gestor
-    Click Button  id:btn-access
-    Wait Until Page Contains  Autenticação Realizada com sucesso
-
 Acesso UC List
     Click Element  xPath://*[@id="navbarSupportedContent"]/ul/li[2]/a
     Wait Until Page Contains  Unidades de Conservação do Programa Monitora
@@ -65,4 +56,3 @@ Deletar UC Teste
     Wait Until Page Contains  Deseja deletar este item?
     Click Element  id:delete-button
     Wait Until Page Contains  Deletado com sucesso
-    Close Browser
