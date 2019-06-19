@@ -1,23 +1,22 @@
 *** Settings ***
-Documentation   Log in App monitora
-Resource        Monitora.robot
+Documentation   Aderir Unidade de Conservação
+Resource        Monitora.resource
 Suite Setup  Open Monitora
 Suite Teardown  Close Browser
-Test Setup
-Test Teardown
+
 
 
 *** Test Cases ***
 
 Login
-        Login Monitora   699.743.491-68   qaz123
+        Login Monitora
 
 Acesso
         Acesso Monitora
 
 Aderir Nova UC
         Acesso UC List
-        Aderir Nova UC    Floresta Nacional Tefé  Plantas - Mata Atlântica e Amazônia    Implementação
+        Aderir Nova UC    ${uc}   ${protocolo}   ${situacao}
         Acesso UC List
 
 Deletar UC Teste
@@ -25,8 +24,6 @@ Deletar UC Teste
 
 
 *** Variables ***
-# @{BROWSERS}          firefox   chrome
-# ${URL}
 
 
 *** Keywords ***
@@ -49,10 +46,10 @@ Aderir Nova UC
     Click Element  //*[@id="select2-id_protocolos-results"]/li[1]
     Select From List By Label  name:situacao  ${situacao}
     Click Button  //*[@id="id-form"]/div/div[3]/div/button[2]
-    Wait Until Page Contains  Dados salvos com sucesso!
+    Wait Until Page Contains  ${sucesso}
 
 Deletar UC Teste
     Click Button  xPath:/html/body/div[1]/article/section/div/div/div/div[2]/div/table/tbody/tr[2]/td[9]/button
-    Wait Until Page Contains  Deseja deletar este item?
+    Wait Until Page Contains  ${confirmacao}
     Click Element  id:delete-button
-    Wait Until Page Contains  Deletado com sucesso
+    Wait Until Page Contains  ${sucesso_del}
